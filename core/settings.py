@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'backend.apps.BackendConfig',
 ]
 
+AUTH_USER_MODEL = "backend.User"
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
