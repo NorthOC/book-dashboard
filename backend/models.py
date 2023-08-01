@@ -4,10 +4,6 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     class Meta:
         permissions = [
-        ("create_book", "Can create book"),
-        ("read_book", " Can read book"),
-        ("update_book", "Can update book"),
-        ("delete_book", "Can delete book"),
         ("administrator", "Can edit other user submissions")
         ]
 
