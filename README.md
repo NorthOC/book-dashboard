@@ -44,6 +44,7 @@ endpoint taip pat turėtų turėti:
     * ~~Login handler~~
     * ~~Register handler~~
     * ~~JWT~~
+* book app:
     * Book ViewSet:
         * POST
         * PUT
