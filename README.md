@@ -41,7 +41,9 @@ endpoint taip pat turėtų turėti:
     * ~~Book model~~
         * Add book cover field
 * api app:
-    * JWT expires in 1 hour
+    * ~~Login handler~~
+    * ~~Register handler~~
+    * ~~JWT~~
     * Book ViewSet:
         * POST
         * PUT
@@ -54,8 +56,8 @@ endpoint taip pat turėtų turėti:
         * auth with token
         * permissions
 * frontend app:
-    * Register
-    * Login
+    * Register form
+    * Login form
     * Dashboard
     * Search bar
     * Administrator panel
