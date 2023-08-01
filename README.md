@@ -37,8 +37,9 @@ endpoint taip pat turėtų turėti:
 ## TODO
 
 * backend app:
-    * User model
-    * Book model
+    * ~~User model~~
+    * ~~Book model~~
+        * Add book cover field
 * api app:
     * JWT expires in 1 hour
     * Book ViewSet:
