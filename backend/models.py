@@ -8,8 +8,10 @@ class User(AbstractUser):
         ]
 
 class Book(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=200)
-    description = models.TextField(max_length=800)
-    author = models.CharField(max_length=200, default="Unknown")
+    description = models.TextField(max_length=800, blank=True)
+    author = models.CharField(max_length=200, default="Unknown", blank=True)
+    pagecount = models.IntegerField(default=0)
+    pubdate = models.DateTimeField(blank=True, null=True)
     #cover =
