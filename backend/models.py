@@ -13,5 +13,5 @@ class Book(models.Model):
     description = models.TextField(max_length=800, blank=True)
     author = models.CharField(max_length=200, default="Unknown", blank=True)
     pagecount = models.IntegerField(default=0)
-    pubdate = models.DateTimeField(blank=True, null=True)
+    pubdate = models.DateField(blank=True, null=True)
     #cover =

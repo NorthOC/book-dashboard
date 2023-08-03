@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="{% static 'scripts/isAuthenticated.js'%}"></script>
+
+    <h1>Books</h1>
+    <div id="books"></div>
+    <a href="{%url 'frontend:logout' %}">Logout</a>
+    <script src="{% static 'scripts/getBookList.js'%}"></script>
+</body>
+</html>

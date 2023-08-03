@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from backend.models import User
+from backend.models import User, Book
 from django.contrib.auth.models import Permission
+from django.contrib.auth.password_validation import validate_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         password = validated_data.pop('password', None)
+        validate_password(password=password)
         instance = self.Meta.model(**validated_data)
         c_book_perm = Permission.objects.get(codename="add_book")
         r_book_perm = Permission.objects.get(codename="view_book")
@@ -23,3 +25,13 @@ class UserSerializer(serializers.ModelSerializer):
             instance.save()
             instance.user_permissions.set(permissions)
             return instance
+
+class BookListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'author']
+
+class BookDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = "__all__"
