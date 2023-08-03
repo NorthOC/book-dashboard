@@ -24,12 +24,12 @@ class BookViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     
     def list(self, request):
-        queryset = Book.objects.all()
+        queryset = Book.objects.filter(user=request.user)
         serializer = BookListSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Book.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = BookDetailSerializer(user)
+        queryset = Book.objects.filter(user=request.user)
+        book = get_object_or_404(queryset, pk=pk)
+        serializer = BookDetailSerializer(book)
         return Response(serializer.data)

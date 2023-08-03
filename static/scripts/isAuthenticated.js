@@ -9,7 +9,7 @@ async function isAuthenticated() {
         window.location.href = redirect_url
         return
     }
-
+    console.log("auth issue")
     let access = JSON.stringify({"token":`${authTokens['access']}`})
     console.log(access)
 

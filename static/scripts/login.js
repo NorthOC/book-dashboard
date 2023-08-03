@@ -9,8 +9,8 @@ form.addEventListener('submit', async function (event) {
     on_login_fail_url = "http://127.0.0.1:8000"
 
     const data = {
-        'username': event.target.username.value,
-        'password': event.target.password.value,
+        "username": event.target.username.value,
+        "password": event.target.password.value,
     };
 
     const response = await fetch(token_url, {

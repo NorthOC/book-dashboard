@@ -2,7 +2,7 @@ async function getBookList(){
     let authTokens = JSON.parse(localStorage.getItem('authTokens'))
 
     let book_list_endpoint = "http://127.0.0.1:8000/api/books/"
-
+    console.log("booklist issue")
     const response = await fetch(book_list_endpoint, {
         method: "GET",
         headers: {
@@ -16,7 +16,7 @@ async function getBookList(){
             let container = document.getElementById("books")
             data.forEach(book => {
                 let element = document.createElement("p")
-                element.innerHTML = `${book.id} - ${book.author} - ${book.title}`
+                element.innerHTML = `${book.user} - ${book.id} - ${book.author} - ${book.title}`
                 container.appendChild(element)
             });
         }
