@@ -7,11 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="{% static 'scripts/isAuthenticated.js'%}"></script>
-
+    <p>Logged in as {{user.username}}</p>
     <h1>Books</h1>
-    <div id="books"></div>
+    {% for book in books %}
+        <p>{{ book.author }} - {{ book.title }} 
+            <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
+            <a href="{% url 'frontend:update' book.id %}">Edit</a> 
+            Upload cover</p>
+    {% endfor %}
     <a href="{%url 'frontend:logout' %}">Logout</a>
-    <script src="{% static 'scripts/getBookList.js'%}"></script>
 </body>
 </html>

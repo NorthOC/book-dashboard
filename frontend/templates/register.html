@@ -17,14 +17,16 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form id="form">
+    <form id="form" method="post">
         {% csrf_token %}
         <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="password1" placeholder="Password">
+        <input type="password" name="password2" placeholder="Repeat password">
+        <ul>
+            <li>Your password must contain at least 8 characters.</li>
+            <li>Your password can't be entirely numeric.</li>
+        </ul>
         <input type="submit" value="Register">
     </form>
-    <script src="{% static 'scripts/getFlashMessage.js' %}"></script>
-    <script>getFlashMessage("form", "TokenFlashMessage")</script>
-    <script src="{% static 'scripts/register.js' %}"></script>
 </body>
 </html>
