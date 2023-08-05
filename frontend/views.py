@@ -77,14 +77,8 @@ class DashboardView(TemplateView):
 
     def get(self, request):
         token = request.COOKIES.get("access")
-        if request.COOKIES.get("access") is None or not authenticate_service(request):
+        if token is None or not authenticate_service(request):
                 return redirect("frontend:index")
-        
-        """ 
-        access_token_obj = AccessToken(token)
-        user_id=access_token_obj['user_id']
-        request.user = User.objects.get(id=user_id) 
-        """
 
         book_list_payload = book_list_service(request)
         status_code = book_list_payload['status_code']

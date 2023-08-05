@@ -39,7 +39,7 @@ endpoint taip pat turėtų turėti:
 * backend app:
     * ~~User model~~
     * ~~Book model~~
-        * Add book cover field
+        * ~~Add book cover field~~
 * api app:
     * ~~Login handler~~
     * ~~Register handler~~
@@ -48,18 +48,18 @@ endpoint taip pat turėtų turėti:
     * Book ViewSet:
         * ~~POST~~
         * ~~PUT~~
-        * PATCH
+        * ~~PATCH~~
         * ~~DELETE~~
         * ~~GET detailView~~
         * GET listView:
             * pagination (query and drf)
-            * filters (icontains and date_from - date_to)
+            * ~~filters (icontains and date_from - date_to)~~
         * ~~auth with token~~
         * permissions
 * frontend app:
     * ~~Register form~~
     * ~~Login form~~
     * ~~Dashboard~~
-    * Search bar
+    * ~~Search bar~~
     * Administrator panel
 * Containerize (Docker)

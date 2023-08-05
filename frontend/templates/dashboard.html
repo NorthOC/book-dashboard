@@ -7,16 +7,30 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Logged in as {{request.user}}</p>
+    <nav>
+        <p>Logged in as {{request.user}}</p>
+        <a href="{% url 'frontend:create' %}">Add book</a>
+        <a href="{%url 'frontend:logout' %}">Logout</a>
+        <form action="" method="GET">
+            <input type="text" name="q" placeholder="Search">
+            <input type="date" name="date-from" placeholder="date to">
+            <input type="date" name="date-to" placeholder="date from">
+            <input type="submit" value="Search">
+        </form>
+    </nav>
     <h1>Books</h1>
-    <a href="{% url 'frontend:create' %}">Add book</a>
+    {% if books %}
     {% for book in books %}
         <figure><img src="{{book.cover}}" alt=""></figure>
-        <p><a href="{% url 'frontend:details' book.id %}">{{ book.author }} - {{ book.title }}</a> 
-            <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
-            <a href="{% url 'frontend:update' book.id %}">Advanced Edit</a>
-            <a href="{% url 'frontend:patch' book.id %}">Quick edit</a></p>
+        <p><a href="{% url 'frontend:details' book.id %}">{{ book.author }} - {{ book.title }}</a></p>
+        <p>published: {{book.pubdate}}</p>
+        <p>uploaded by: {{book.username}}</p>
+        <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
+        <a href="{% url 'frontend:update' book.id %}">Advanced Edit</a>
+        <a href="{% url 'frontend:patch' book.id %}">Quick edit</a>
     {% endfor %}
-    <a href="{%url 'frontend:logout' %}">Logout</a>
+    {% else %}
+    <p>There are no books in your dashboard.</p>
+    {% endif %}
 </body>
 </html>

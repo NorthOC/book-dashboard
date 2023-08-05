@@ -45,8 +45,14 @@ def book_list_service(request) -> dict:
     url = PROJECT_ROOT_URL + "api/books/"
     headers = {"Content-Type": "application/json",
                "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+    
+    payload = {
+        'q': request.GET.get('q'),
+        'date_from': request.GET.get('date-from'),
+        'date_to': request.GET.get('date-to'),
+    }
 
-    r = requests.get(url=url, headers=headers)
+    r = requests.get(url=url, headers=headers, json=payload)
     body = r.json()
 
     payload = {

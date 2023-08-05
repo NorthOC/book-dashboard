@@ -13,5 +13,5 @@ class Book(models.Model):
     description = models.TextField(max_length=800, blank=True)
     author = models.CharField(max_length=200, default="Unknown", blank=True)
     pagecount = models.IntegerField(default=0)
-    pubdate = models.DateField(blank=True, null=True, default="2020-06-15")
+    pubdate = models.DateField(blank=True, null=True, default="15-06-2023")
     cover = models.ImageField(upload_to="uploads/", null=True, default="default-cover.jpg")
