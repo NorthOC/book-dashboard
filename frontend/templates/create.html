@@ -9,7 +9,7 @@
     <h1>Create book</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <input type="submit" value="Create">
     </form>
     {% if messages %}

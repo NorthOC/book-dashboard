@@ -15,6 +15,7 @@ def user_token_service(request) -> dict:
 
     r = requests.post(url=url, headers=headers, json=params)
     body = r.json()
+    #print(body)
     payload = {
         "status_code": r.status_code,
         "body": body

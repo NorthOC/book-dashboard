@@ -2,14 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserForm, BookForm, BookPatchForm
 from django.views.generic import TemplateView
-from backend.services import user_token_service, authenticate_service
-from backend.services import book_list_service, book_detail_service
-from backend.services import book_delete_service, book_create_service
-from backend.services import book_edit_service, book_patch_service
+from .services import user_token_service, authenticate_service
+from .services import book_list_service, book_detail_service
+from .services import book_delete_service, book_create_service
+from .services import book_edit_service, book_patch_service
 from django.contrib.auth.models import Permission
 
 class LoginView(TemplateView):
-
     def get(self, request):
         access_token = request.COOKIES.get("access")
 
@@ -30,10 +29,12 @@ class LoginView(TemplateView):
             response = redirect('frontend:dashboard')
             response.set_cookie(key="access", value=data['access'], samesite="Lax")
         elif status_code == 401:
+            messages.add_message(request, messages.ERROR, 
+                                 "Invalid username or password. Please try again.")
             response = render(request, "login.html")
-            messages.add_message(request, messages.ERROR, "Invalid username or passwords. Please try again.")
         else:
-            messages.add_message(request, messages.ERROR, "Oops! One of of your fields was left empty! Please try again.")
+            messages.add_message(request, messages.ERROR, 
+                                 "Oops! One of of your fields was left empty! Please try again.")
             response = render(request, "login.html")
 
         return response
@@ -73,11 +74,12 @@ class RegisterView(TemplateView):
             user.user_permissions.set(permissions)
             return redirect("frontend:index")
         
-        messages.add_message(request, messages.ERROR, "There was a problem creating your account. Make sure that you follow field requirements.")
+        messages.add_message(request, messages.ERROR, 
+                             "There was a problem creating your account. \
+                                Make sure that you follow field requirements.")
         return render(request, "register.html")
 
 class DashboardView(TemplateView):
-
     def get(self, request):
         token = request.COOKIES.get("access")
         if token is None or not authenticate_service(request):
@@ -114,8 +116,6 @@ class DashboardView(TemplateView):
             context = {'books': data['results'],
                        'next_url_params': data['next'],
                        'prev_url_params': data['previous'],
-                       'current_page': page_number,
-                       'items_per_page': items_per_page,
                        'total_pages': data['count']}
             
             return render(request, "dashboard.html", context)
@@ -133,8 +133,7 @@ class DetailView(TemplateView):
         if status_code == 200:
             context = {'book': data}
             return render(request, "book-details.html", context) 
-        else:
-            return render(request, '404.html')
+        return redirect("frontend:dashboard")
     
 class DeleteView(TemplateView):
     def get(self, request, id):
@@ -147,11 +146,8 @@ class DeleteView(TemplateView):
 
         if status_code == 202:
             return redirect("frontend:dashboard")
-        elif status_code == 404:
-            return render(request, '404.html')
-        else:
-            messages.add_message(request, messages.ERROR, data)
-            return render(request, "delete-error.html")
+        messages.add_message(request, messages.ERROR, data)
+        return render(request, "delete-error.html")
         
 class EditView(TemplateView):
     def get(self, request, id):
@@ -167,7 +163,7 @@ class EditView(TemplateView):
             context = {'form': form}
             return render(request, "edit.html", context) 
         else:
-            return render(request, '404.html')
+            return redirect("frontend:dashboard")
     
     def post(self, request, id):
         if request.COOKIES.get("access") is None or not authenticate_service(request):
@@ -208,7 +204,7 @@ class CreateView(TemplateView):
             form = BookForm(data=request.POST)
             context = {'form': form}
             for key, err in data.items():
-                messages.add_message(request, messages.ERROR, f"{key} - {err[0]}")
+                messages.add_message(request, messages.ERROR, f"{key} - {err}")
             return render(request, "create.html", context)
         
 class PatchView(TemplateView):
@@ -224,8 +220,8 @@ class PatchView(TemplateView):
             form = BookPatchForm(data=data)
             context = {'form': form}
             return render(request, "edit.html", context) 
-        else:
-            return render(request, '404.html')
+        
+        return redirect("frontend:dashboard")
     
     def post(self, request, id):
         if request.COOKIES.get("access") is None or not authenticate_service(request):

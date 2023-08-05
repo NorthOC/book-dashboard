@@ -30,14 +30,13 @@
         <a href="{% url 'frontend:patch' book.id %}">Quick edit</a>
     {% endfor %}
     {% if prev_url_params is not None %}
-    <a href="{%url 'frontend:dashboard' %}?page_number={{prev_url_params}}&items_per_page={{items_per_page}}">Prev page</a>
+        <a href="{%url 'frontend:dashboard' %}?page_number={{prev_url_params}}&items_per_page={{items_per_page}}">Prev page</a>
     {% endif%}
-    <p>{{current_page}} of {{total_pages}}</p>
-    {% if next_url_params is not None %}
-    <a href="{%url 'frontend:dashboard' %}?page_number={{next_url_params}}&items_per_page={{items_per_page}}">Next page</a>
-    {% endif%}
+        {% if next_url_params is not None %}
+        <a href="{%url 'frontend:dashboard' %}?page_number={{next_url_params}}&items_per_page={{items_per_page}}">Next page</a>
+        {% endif%}
     {% else %}
-    <p>There are no books in your dashboard.</p>
+        <p>There are no books in your dashboard.</p>
     {% endif %}
 </body>
 </html>

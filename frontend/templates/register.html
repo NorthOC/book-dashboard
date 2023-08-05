@@ -4,29 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'style.css'%}">
     <title>Document</title>
 </head>
 <body>
-    <h1>Register</h1>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-            {{ message }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <form id="form" method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password1" placeholder="Password">
-        <input type="password" name="password2" placeholder="Repeat password">
-        <ul>
-            <li>Your password must contain at least 8 characters.</li>
-            <li>Your password can't be entirely numeric.</li>
+    <div class="user-form-container">
+        <h1>Register</h1>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
         </ul>
-        <input type="submit" value="Register">
-    </form>
+        {% endif %}
+        <form id="form" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password1" placeholder="Password">
+            <input type="password" name="password2" placeholder="Repeat password">
+            <p class="info-msg">Your password must be 8 or more symbols.</p>
+            <input type="submit" value="Register">
+        </form>
+        <p>Already have an account?</p>
+        <a href="{%url 'frontend:index'%}"><input type="submit" value="Login"></a>
+    </div>
 </body>
 </html>

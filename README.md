@@ -30,7 +30,7 @@ POST metodui)
     * GET metodai turi būti dviejų tipų - list bei detail, t.y. `GET books/` bei `GET books/{book-id}/`. List endpoint turėtų būti mažiau informacijos, nei detail. List
 endpoint taip pat turėtų turėti:
         1. puslapiavimą - pagal query parametrus `page_number` bei `items_per_page`
-        2. filtravimą - paieška pagal knygos pavadinimą (`icontains` filtras) bei filtravimas pagal knygos įkėlimo datą (date_from, date_to). Filtrai taip pat paduodami query parametruose.
+        2. filtravimą - paieška pagal knygos pavadinimą (`icontains` filtras) bei filtravimas pagal knygos įkėlimo datą (`date_from`, `date_to`). Filtrai taip pat paduodami query parametruose.
 
 ## 4. Projektą įkelti į GitHub kaip privatų projektą bei pasidalinti su naudotoju `deitam`, kad galėtume jį matyti.
 
@@ -52,13 +52,23 @@ endpoint taip pat turėtų turėti:
         * ~~DELETE~~
         * ~~GET detailView~~
         * GET listView:
-            * pagination (query and drf)
+            * ~~pagination (query and drf)~~
             * ~~filters (icontains and date_from - date_to)~~
         * ~~auth with token~~
-        * permissions
+        * ~~permissions~~
 * frontend app:
     * ~~Register form~~
     * ~~Login form~~
     * ~~Dashboard~~
     * ~~Search bar~~
-    * Administrator panel
+
+## Explanation
+
+The front-end is built with Django templates and the API with DRF. Calls to the database, from the front-end, are done via microservices to the API.
+
+## DIRECTORIES
+
+* `core/` - project files.
+* `api/` - contains `BookViewSet`, serializers and JWT token endpoints. Files to look at: `views.py`, `urls.py` and `serializers.py`
+* `backend/` - models. Files to look at: `models.py` and `services.py`
+* `frontend/` - routing, views, forms and templates. Look at: `urls.py`, `views.py` and `templates/`. To fully separate the front-end from the back-end, forms would need to be replaced with manual inputs in templates.
