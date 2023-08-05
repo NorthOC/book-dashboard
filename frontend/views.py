@@ -24,13 +24,16 @@ class LoginView(TemplateView):
     def post(self, request):
         token_payload = user_token_service(request)
         status_code = token_payload['status_code']
-        data = dict(token_payload['body'])
+        data = token_payload['body']
 
         if status_code == 200:
             response = redirect('frontend:dashboard')
             response.set_cookie(key="access", value=data['access'], samesite="Lax")
+        elif status_code == 401:
+            response = render(request, "login.html")
+            messages.add_message(request, messages.ERROR, "Invalid username or passwords. Please try again.")
         else:
-            messages.add_message(request, messages.ERROR, data['detail'])
+            messages.add_message(request, messages.ERROR, "Oops! One of of your fields was left empty! Please try again.")
             response = render(request, "login.html")
 
         return response
@@ -84,9 +87,39 @@ class DashboardView(TemplateView):
         status_code = book_list_payload['status_code']
         data = book_list_payload['body']
 
+
         if status_code == 200:
-            context = {'books': data}
-        return render(request, "dashboard.html", context)
+
+            page_number = request.GET.get('page_number') 
+            if page_number != None or page_number != "":
+                try:
+                    page_number = int(page_number)
+                except:
+                    page_number = 1
+
+            items_per_page = request.GET.get('items_per_page') 
+            if items_per_page == None or items_per_page == "":
+                try:
+                    items_per_page = int(items_per_page)
+                except:
+                    items_per_page = 3
+
+            # get params from pagination urls
+            if data['next'] is not None:
+                data['next'] = data['next'].split('/')[-1].split("=")[-1]
+            
+            if data['previous'] is not None:
+                data['previous'] = data['previous'].split('/')[-1].split("=")[-1]
+
+            context = {'books': data['results'],
+                       'next_url_params': data['next'],
+                       'prev_url_params': data['previous'],
+                       'current_page': page_number,
+                       'items_per_page': items_per_page,
+                       'total_pages': data['count']}
+            
+            return render(request, "dashboard.html", context)
+        return redirect("frontend:index")
     
 class DetailView(TemplateView):
     def get(self, request, id):

@@ -43,6 +43,30 @@ def authenticate_service(request) -> bool:
 
 def book_list_service(request) -> dict:
     url = PROJECT_ROOT_URL + "api/books/"
+    params = []
+    page_number = request.GET.get("page_number")
+    items_per_page = request.GET.get("items_per_page")
+
+    if page_number is not None and page_number != "":
+        try:
+            param1 = f"page={page_number}"
+            params.append(param1)
+        except:
+            param1 = None
+    
+    if items_per_page is not None and items_per_page != "":
+        try:
+            param2 = f"items_per_page={items_per_page}"
+            params.append(param2)
+        except:
+            param2 = None
+    
+    if len(params) > 0:
+        url += "?"
+        joined_params = ("&").join(params)
+        url += joined_params
+
+
     headers = {"Content-Type": "application/json",
                "Authorization": f"Bearer {request.COOKIES.get('access')}"}
     
@@ -54,7 +78,7 @@ def book_list_service(request) -> dict:
 
     r = requests.get(url=url, headers=headers, json=payload)
     body = r.json()
-
+    print(body)
     payload = {
         "status_code": r.status_code,
         "body": body

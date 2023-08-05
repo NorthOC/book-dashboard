@@ -62,4 +62,3 @@ endpoint taip pat turėtų turėti:
     * ~~Dashboard~~
     * ~~Search bar~~
     * Administrator panel
-* Containerize (Docker)
