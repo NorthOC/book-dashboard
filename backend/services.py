@@ -41,7 +41,7 @@ def authenticate_service(request) -> bool:
 
     return True
 
-def book_list_service(request):
+def book_list_service(request) -> dict:
     url = PROJECT_ROOT_URL + "api/books/"
     headers = {"Content-Type": "application/json",
                "Authorization": f"Bearer {request.COOKIES.get('access')}"}
@@ -53,6 +53,105 @@ def book_list_service(request):
         "status_code": r.status_code,
         "body": body
     }
-    print(payload)
+    #print(payload)
+    
+    return payload
+
+def book_detail_service(request, id) -> dict:
+    url = PROJECT_ROOT_URL + f"api/books/{id}"
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+
+    r = requests.get(url=url, headers=headers)
+    
+    body = r.json()
+
+    payload = {
+        "status_code": r.status_code,
+        "body": body
+    }
+    #print(payload)
+    
+    return payload
+
+def book_delete_service(request, id) -> dict:
+    url = PROJECT_ROOT_URL + f"api/books/{id}"
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+
+    r = requests.delete(url=url, headers=headers)
+    body = r.json()
+
+    payload = {
+        "status_code": r.status_code,
+        "body": body
+    }
+    #print(payload)
+    
+    return payload
+
+def book_create_service(request) -> dict:
+    url = PROJECT_ROOT_URL + f"api/books/"
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+    
+    payload = {
+        'title': request.POST['title'],
+        'description': request.POST['description'],
+        'pubdate': request.POST['pubdate'],
+        'pagecount': request.POST['pagecount'],
+        'author': request.POST['author']
+    }
+
+    r = requests.post(url=url, headers=headers, json=payload)
+    body = r.json()
+
+    payload = {
+        "status_code": r.status_code,
+        "body": body
+    }
+    
+    return payload
+
+def book_edit_service(request, id) -> dict:
+    url = PROJECT_ROOT_URL + f"api/books/{id}/"
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+    
+    payload = {
+        'title': request.POST['title'],
+        'description': request.POST['description'],
+        'pubdate': request.POST['pubdate'],
+        'pagecount': request.POST['pagecount'],
+        'author': request.POST['author']
+    }
+
+    r = requests.put(url=url, headers=headers, json=payload)
+    body = r.json()
+
+    payload = {
+        "status_code": r.status_code,
+        "body": body
+    }
+    
+    return payload
+
+def book_patch_service(request, id) -> dict:
+    url = PROJECT_ROOT_URL + f"api/books/{id}/"
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+    
+    payload = {
+        'title': request.POST['title'],
+        'author': request.POST['author']
+    }
+
+    r = requests.patch(url=url, headers=headers, json=payload)
+    body = r.json()
+
+    payload = {
+        "status_code": r.status_code,
+        "body": body
+    }
     
     return payload

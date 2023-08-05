@@ -46,20 +46,20 @@ endpoint taip pat turėtų turėti:
     * ~~JWT~~
 * book app:
     * Book ViewSet:
-        * POST
-        * PUT
+        * ~~POST~~
+        * ~~PUT~~
         * PATCH
-        * DELETE
-        * GET detailView
+        * ~~DELETE~~
+        * ~~GET detailView~~
         * GET listView:
             * pagination (query and drf)
             * filters (icontains and date_from - date_to)
-        * auth with token
+        * ~~auth with token~~
         * permissions
 * frontend app:
-    * Register form
-    * Login form
-    * Dashboard
+    * ~~Register form~~
+    * ~~Login form~~
+    * ~~Dashboard~~
     * Search bar
     * Administrator panel
 * Containerize (Docker)

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for key, value in book.items %}
+    <p>{{key}}-{{value}}</p>
+    {% endfor %}
+    <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
+    <a href="{% url 'frontend:update' book.id %}">Edit</a> 
+</body>
+</html>

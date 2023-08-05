@@ -7,13 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Logged in as {{user.username}}</p>
+    <p>Logged in as {{request.user}}</p>
     <h1>Books</h1>
+    <a href="{% url 'frontend:create' %}">Add book</a>
     {% for book in books %}
-        <p>{{ book.author }} - {{ book.title }} 
+        <figure><img src="{{book.cover}}" alt=""></figure>
+        <p><a href="{% url 'frontend:details' book.id %}">{{ book.author }} - {{ book.title }}</a> 
             <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
-            <a href="{% url 'frontend:update' book.id %}">Edit</a> 
-            Upload cover</p>
+            <a href="{% url 'frontend:update' book.id %}">Advanced Edit</a>
+            <a href="{% url 'frontend:patch' book.id %}">Quick edit</a></p>
     {% endfor %}
     <a href="{%url 'frontend:logout' %}">Logout</a>
 </body>
