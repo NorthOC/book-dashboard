@@ -34,3 +34,13 @@ The front-end is built with Django templates and the API with DRF. Calls to the 
 * `api/` - contains `BookViewSet`, serializers and JWT token endpoints. Files to look at: `views.py`, `urls.py` and `serializers.py`
 * `backend/` - models. Files to look at: `models.py`.
 * `frontend/` - routing, views, forms and templates. Look at: `urls.py`, `views.py`, `services.py` and `templates/`.
+
+## Database
+
+There's a dummy database to save you some time. Feel free to make your own items and users.
+
+admin username: `admin`
+admin password: `123`
+
+user username: `denis`
+user username: `123qwe123`
