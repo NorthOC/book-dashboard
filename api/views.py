@@ -27,7 +27,7 @@ class BookViewSet(PageNumberPagination, viewsets.ViewSet):
 
     page_size = 3
     page_size_query_param = 'items_per_page'
-    max_page_size = 5
+    max_page_size = 30
 
 
     def list(self, request):
