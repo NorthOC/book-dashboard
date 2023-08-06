@@ -27,20 +27,33 @@ def authenticate_service(request) -> bool:
 
     access_token = request.COOKIES.get("access")
     if not access_token:
-        return False
+        return {"status_code": 401}
 
     url = PROJECT_ROOT_URL + "api/verify/"
 
-    params = {
-        "token": access_token
-    }
+    params = {"token": access_token}
     headers = {"Content-Type": "application/json"}
 
     r = requests.post(url=url, headers=headers, json=params)
     if r.status_code != 200:
-        return False
+        return {"status_code": 401}
+    
+    return {"status_code": 200}
 
-    return True
+def get_username_service(request) -> str:
+    url = PROJECT_ROOT_URL + "api/user/"
+
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {request.COOKIES.get('access')}"}
+    
+    r = requests.get(url=url, headers=headers)
+    body = r.json()
+    if r.status_code == 200:
+        username = body['username']
+        return username
+
+    return None
+
 
 def book_list_service(request) -> dict:
     url = PROJECT_ROOT_URL + "api/books/"
@@ -79,13 +92,23 @@ def book_list_service(request) -> dict:
 
     r = requests.get(url=url, headers=headers, json=payload)
     body = r.json()
+
     print(body)
+    if r.status_code == 200:
+        if body['next'] is not None:
+                body['next'] = body['next'].split('?')[-1]
+                body['next'] = body['next'].replace("page=", "page_number=")
+                body['next'] = body['next'].replace("_page_number=", "_page=")
+            
+        if body['previous'] is not None:
+                body['previous'] = body['previous'].split('?')[-1]
+                body['previous'] = body['previous'].replace("page=", "page_number=")
+                body['previous'] = body['previous'].replace("_page_number=", "_page=")
+            
     payload = {
         "status_code": r.status_code,
         "body": body
     }
-    #print(payload)
-    
     return payload
 
 def book_detail_service(request, id) -> dict:

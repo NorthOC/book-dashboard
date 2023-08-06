@@ -1,12 +1,24 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from backend.models import Book
-from .serializers import BookListSerializer, BookDetailSerializer, BookPartialSerializer
+from .serializers import BookListUserSerializer, BookListAdminSerializer, BookDetailSerializer
+from .serializers import BookPartialSerializer
+
+class UsernameView(APIView):
+    """Get user data if authenticated"""
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        return Response({
+            'username': request.user.username
+        })
+
 
 class BookViewSet(PageNumberPagination, viewsets.ViewSet):
     """Standard Book ViewSet API with CRUD functionality"""
@@ -34,7 +46,10 @@ class BookViewSet(PageNumberPagination, viewsets.ViewSet):
         if date_to == "" or date_to is None:
             date_to = '9999-12-31'
 
-        if request.user.has_perm("backend.administrator"):
+        is_admin = request.user.has_perm("backend.administrator")
+        is_user = request.user.has_perm("backend.view_book")
+
+        if is_admin:
             queryset = Book.objects.filter(
                 Q(title__icontains=q) |
                 Q(description__icontains=q) |
@@ -43,7 +58,7 @@ class BookViewSet(PageNumberPagination, viewsets.ViewSet):
                 Q(pubdate__lte=date_to) &
                 Q(pubdate__gte=date_from)
                 ).order_by("-pubdate")
-        elif request.user.has_perm("backend.view_book"):
+        elif is_user:
             queryset = Book.objects.filter(
                     Q(title__icontains=q) |
                     Q(description__icontains=q) |
@@ -57,10 +72,17 @@ class BookViewSet(PageNumberPagination, viewsets.ViewSet):
 
         page = self.paginate_queryset(queryset, request)
         if page is not None:
-            serializer = BookListSerializer(page, many=True)
+            if is_admin:
+                serializer = BookListAdminSerializer(page, many=True)
+            else:
+                serializer = BookListUserSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = BookListSerializer(queryset, many=True)
+        if is_admin:
+            serializer = BookListAdminSerializer(queryset, many=True)
+        else:
+            serializer = BookListUserSerializer(queryset, many=True)
+
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -79,7 +101,7 @@ class BookViewSet(PageNumberPagination, viewsets.ViewSet):
 
     def create(self, request):
         """CREATE BOOK"""
-        if request.user.has_perm("backend.create_book") or request.user.has_perm("backend.administrator"):
+        if request.user.has_perm("backend.add_book") or request.user.has_perm("backend.administrator"):
             request.data['user'] = request.user.id
             serializer = BookDetailSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)

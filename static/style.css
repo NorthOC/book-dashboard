@@ -5,7 +5,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    height: 100vh;
+    min-height: 95vh;
 }
 .user-form-container{
     background-color: #fff;
@@ -18,19 +18,18 @@ body{
     display: block;
     width: 100%;
     max-width: 600px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    margin: 50px auto;
 }
 h1{
     margin: 0 auto;
     display: block;
     width: max-content;
 }
-.user-form-container input[type=text], .user-form-container input[type=password]{
+.user-form-container input[type=text], 
+.user-form-container textarea,
+.user-form-container input[type=password],
+.user-form-container input[type=number],
+.user-form-container input[type=date]{
     background-color: white;
     width: 50%;
     min-width: 200px;
@@ -41,10 +40,14 @@ h1{
     margin: 10px auto;
     display: block;
   }
+.user-form-container textarea{
+    font-size: 13px;
+    width: 90%;
+    resize: none;
+}
 .user-form-container input[type=submit]{
     border: 0;
     border-radius: 25px;
-    box-sizing: border-box;
     cursor: pointer;
     font-family: Source Sans Pro,sans-serif;
     font-size: 18px;
@@ -59,6 +62,62 @@ h1{
     text-decoration: none;
     display: block;
     background-color: #04aa6d;
+}
+
+.nav-cont{
+    display: grid;
+    grid-template-columns: 0.5fr 1.8fr 0.7fr;
+    max-width: 1366px;
+    margin: auto;
+}
+.nav-cont p{
+    margin:20px auto;
+    display: block;
+}
+nav{
+    background-color: #04aa6d;
+    font-family: sans-serif;
+}
+.nav-cont input[type=number]{
+    width: 100px;
+}
+nav .flex{
+    display: flex;
+    justify-content: end;
+    height: 100%;
+    gap: 10px;
+    padding: 5px 10px 9px;
+}
+.flex .extra{
+    padding: 0px 20px;
+}
+.search-fields{
+    display: flex;
+    flex-direction: column;
+}
+.search-fields label{
+    font-size: 12px;
+}
+.form-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    margin-top: 5px;
+    height: 45px;
+}
+nav a button{
+    width: 100%;
+    height: 100%;
+}
+.user-form-container input[type=number]{
+    min-width: 100px;
+    width: 10%;
+    text-align: center;
+}
+.user-form-container input[type=date]{
+    min-width: 150px;
+    width: 10%;
+    text-align: center;
 }
 .user-form-container input[type=submit]:hover{
     background-color: #059862;
@@ -83,4 +142,103 @@ h1{
 }
 .user-form-container a input[type=submit]:hover{
     background-color: #f1f1f1;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 400px);
+    justify-content: center;
+}
+.max-width{
+    max-width: 200px;
+}
+.link{
+    display: block;
+}
+.card small{
+    display: block;
+}
+.card a{
+    text-decoration: none;
+    color: #04aa6d;
+    
+}
+.card{
+    width: fit-content;
+    margin: auto;
+    font-family: sans-serif;
+}
+.card h2{
+    font-weight: 500;
+}
+.card figure{
+    display: block;
+    max-width: 200px;
+    margin: 0;
+}
+.card img{
+    width: 100%;
+}
+.grid h2{
+    font-size: 14px;
+}
+.pagination{
+    width: fit-content;
+    margin: 50px auto;
+    display: flex;
+    gap: 15px;
+
+}
+.no-margin{
+    margin: 0 auto;
+}
+.pagination a, .details a{
+    text-decoration: none;
+    color: #04aa6d;
+    border: 2px solid #ccc;
+    border-radius: 10%;
+    padding: 10px 30px;
+}
+.details h1{
+    font-weight: 500;
+}
+.details{
+    margin: 10px auto;
+    max-width: 600px;
+}
+.details .desc{
+    float: right;
+}
+.no-books{
+    width: fit-content;
+    margin: auto;
+}
+.delete-btn{
+    border-color: red !important;
+    color: red !important; 
+}
+.delete-btn:hover{
+    background-color: #fae5e5;
+}
+.edit-btn:hover{
+    background-color: #e5fae7;
+}
+.reset-btn, .nav-cont input[type=submit]{
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    font-family: sans;
+}
+.reset-btn:hover, .nav-cont input[type=submit]:hover{
+    background-color: #f1f1f1;
+}
+.reset-btn p{
+    margin: 0 auto;
+    align-self: center;
+    color: black;
+    font-size: 14px;
+    margin-bottom: 1px;
 }

@@ -1,15 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'style.css'%}">
     <title>Document</title>
 </head>
 <body>
-    {% for key, value in book.items %}
-    <p>{{key}}-{{value}}</p>
-    {% endfor %}
-    <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
-    <a href="{% url 'frontend:update' book.id %}">Edit</a> 
+    <div class="card details">
+        <figure>
+            <img src="{{book.cover}}" alt="">
+        </figure>
+        {% if book.username %}
+        <small>uploaded by {{book.username}} {{book.created|timesince}} ago</small>
+        {% endif %}
+        <h2>{{ book.title }} by {{ book.author }}</h2>
+        {% if book.description %}
+            <p>Description: {{book.description}}</p>
+        {% endif %}
+        <p>Pages: {{book.pagecount}}</p>
+        <p>Publish date: {{book.pubdate}}</p>
+        <div class="pagination no-margin">
+            <a href="{% url 'frontend:patch' book.id %}" class="edit-btn">Quick Edit</a>
+            <a href="{% url 'frontend:update' book.id %}" class="edit-btn">Advanced Edit</a>
+            <a href="{% url 'frontend:delete' book.id %}" class="delete-btn">Delete</a>
+        </div>
+    </div>
 </body>
 </html>

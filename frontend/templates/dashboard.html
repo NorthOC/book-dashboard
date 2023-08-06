@@ -4,39 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'style.css'%}">
     <title>Document</title>
 </head>
 <body>
     <nav>
-        <p>Logged in as {{request.user}}</p>
-        <a href="{% url 'frontend:create' %}">Add book</a>
-        <a href="{%url 'frontend:logout' %}">Logout</a>
-        <form action="" method="GET">
-            <input type="text" name="q" placeholder="Search">
-            <input type="date" name="date-from" placeholder="date to">
-            <input type="date" name="date-to" placeholder="date from">
-            <input type="submit" value="Search">
-        </form>
+        <div class="nav-cont">
+            <p>Welcome {{username}}!</p>
+            <form action="" method="GET">
+                <div class="form-grid">
+            
+                    <div class="search-fields">
+                        <label for="">Search</label>
+                        <input type="text" name="q">
+                    </div>
+                    <div class="search-fields">
+                        <label for="date-from">Date from</label>
+                        <input type="date" name="date-from">
+                    </div>
+                    <div class="search-fields">
+                        <label for="date-to">Date to</label>
+                        <input type="date" name="date-to">
+                    </div>
+                    <div class="search-fields">
+                        <label for="items_per_page">Items per page</label>
+                        <input type="number" name="items_per_page">
+                    </div>
+                    <input type="submit" value="Search">
+                    <a href="/" class="reset-btn"><p>Reset</p></a>
+                </div>
+            </form>
+            <div class="flex">
+                <a href="{% url 'frontend:create' %}" class='reset-btn extra'><p>Add book</p></a>
+                <a href="{%url 'frontend:logout' %}" class='reset-btn extra'><p>Logout</p></a>
+            </div>
+        </div>
     </nav>
     <h1>Books</h1>
     {% if books %}
-    {% for book in books %}
-        <figure><img src="{{book.cover}}" alt=""></figure>
-        <p><a href="{% url 'frontend:details' book.id %}">{{ book.author }} - {{ book.title }}</a></p>
-        <p>published: {{book.pubdate}}</p>
-        <p>uploaded by: {{book.username}}</p>
-        <a href="{% url 'frontend:delete' book.id %}">Delete</a> 
-        <a href="{% url 'frontend:update' book.id %}">Advanced Edit</a>
-        <a href="{% url 'frontend:patch' book.id %}">Quick edit</a>
-    {% endfor %}
-    {% if prev_url_params is not None %}
-        <a href="{%url 'frontend:dashboard' %}?page_number={{prev_url_params}}&items_per_page={{items_per_page}}">Prev page</a>
-    {% endif%}
-        {% if next_url_params is not None %}
-        <a href="{%url 'frontend:dashboard' %}?page_number={{next_url_params}}&items_per_page={{items_per_page}}">Next page</a>
-        {% endif%}
+    <div class="grid">
+        {% for book in books %}
+            <div class="card max-width">
+                <a href="{% url 'frontend:details' book.id %}" class="link">
+                    <figure><img src="{{book.cover}}" alt=""></figure>
+                    <h2><a href="{% url 'frontend:details' book.id %}">{{ book.author }}: {{ book.title }}</a></h2>
+                    <small>published: {{book.pubdate}}</small>
+                    {% if book.username %}
+                        <small>uploaded by: {{book.username}}</small>
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+        <div class="pagination">
+            {% if prev_url_params is not None %}
+                <a href="{%url 'frontend:dashboard' %}?{{prev_url_params}}&q={{q}}&date_to={{date_to}}&date_from={{date_from}}" class="prev edit-btn">Prev page</a>
+            {% endif%}
+            {% if next_url_params is not None %}
+                <a href="{%url 'frontend:dashboard' %}?{{next_url_params}}&q={{q}}&date_to={{date_to}}&date_from={{date_from}}" class="next edit-btn">Next page</a>
+            {% endif%}
+        </div>
     {% else %}
-        <p>There are no books in your dashboard.</p>
+        {%if q != ""%}
+        <p class="no-books">No books were found. Maybe try something else?</p>
+        {% else %}
+        <p class="no-books">Currently, you have no books in your library.</p>
+        {% endif %}
     {% endif %}
 </body>
 </html>
