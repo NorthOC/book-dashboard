@@ -1,4 +1,5 @@
-# Book dashboard with DRF + jwt-auth using python microservices as a back-end.
+# Book dashboard with DRF + jwt-auth
+
 ## Install
 
 ### Linux
