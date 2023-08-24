@@ -1,5 +1,4 @@
-# TASK - Denis Lisunov
-
+# Book dashboard with DRF + jwt-auth using python microservices as a back-end.
 ## Install
 
 ### Linux
@@ -33,7 +32,8 @@ The front-end is built with Django templates and the API with DRF. Calls to the 
 * `core/` - project files.
 * `api/` - contains `BookViewSet`, serializers and JWT token endpoints. Files to look at: `views.py`, `urls.py` and `serializers.py`
 * `backend/` - models. Files to look at: `models.py`.
-* `frontend/` - routing, views, forms and templates. Look at: `urls.py`, `views.py`, `services.py` and `templates/`.
+* `frontend/` - routing, views, forms and templates. Look at: `urls.py`, `views.py` and `templates/`.
+* `frontend/services.py` - functions to handle api calls.
 
 ## Database
 
